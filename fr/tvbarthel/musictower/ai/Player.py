@@ -1,8 +1,11 @@
-from random import choice, random
+from random import choice, random, randint
 
 
 class Player:
     MUTATION_FACTORS = [-150, -100, -50, 50, 100, 150]
+    NEW_GENE_DEFAULT_OFFSET = 1000
+    NEW_GENES_MIN_VARIATION = -500
+    NEW_GENES_MAX_VARIATION = 500
 
     def __init__(self, dna):
         self.dna = dna
@@ -42,6 +45,29 @@ class Player:
             if random() < percentage:
                 mutation_factor = choice(Player.MUTATION_FACTORS)
                 self.dna[index] += mutation_factor
+
+    def add_genes(self, number_of_genes_to_add):
+        """
+        Add new genes to this player.
+
+        :param number_of_genes_to_add: the number of genes to add.
+        """
+        if number_of_genes_to_add <= 0:
+            raise ValueError("The number of genes to add must be strictly positive")
+
+        dna_length = len(self.dna)
+        if dna_length >= 2:
+            offset = self.dna[-1] - self.dna[-2]
+        elif dna_length >= 1:
+            offset = self.dna[-1]
+        else:
+            offset = Player.NEW_GENE_DEFAULT_OFFSET
+
+        for index in range(number_of_genes_to_add):
+            reference = self.dna[-1] if self.dna else 0
+            variation = randint(Player.NEW_GENES_MIN_VARIATION, Player.NEW_GENES_MAX_VARIATION)
+            new_value = reference + offset + variation
+            self.dna.append(new_value)
 
     @staticmethod
     def __reproduce_dna(first_parent_dna, second_parent_dna):
