@@ -4,8 +4,8 @@ from random import choice, random, randint
 class Player:
     MUTATION_FACTORS = [-150, -100, -50, 50, 100, 150]
     NEW_GENE_DEFAULT_OFFSET = 1000
-    NEW_GENES_MIN_VARIATION = -500
-    NEW_GENES_MAX_VARIATION = 500
+    NEW_GENE_MIN_VARIATION = -500
+    NEW_GENE_MAX_VARIATION = 500
 
     def __init__(self, dna):
         self.dna = dna
@@ -65,7 +65,7 @@ class Player:
 
         for index in range(number_of_genes_to_add):
             reference = self.dna[-1] if self.dna else 0
-            variation = randint(Player.NEW_GENES_MIN_VARIATION, Player.NEW_GENES_MAX_VARIATION)
+            variation = randint(Player.NEW_GENE_MIN_VARIATION, Player.NEW_GENE_MAX_VARIATION)
             new_value = reference + offset + variation
             self.dna.append(new_value)
 
