@@ -8,6 +8,11 @@ class PopulationPersistor:
 
     # noinspection PyMethodMayBeStatic
     def load_population(self, path):
+        """Load a population from a file.
+
+        :param path: the path of the file
+        :return: A Population
+        """
         with open(path) as input_file:
             generation = int(input_file.readline())
             # simply consume the average score
@@ -23,6 +28,11 @@ class PopulationPersistor:
 
     # noinspection PyMethodMayBeStatic
     def save_population(self, population, path):
+        """Save a population to a file.
+
+        :param population: the population to save.
+        :param path: the path of the file
+        """
         with open(path, "w+") as output_file:
             output_file.write(str(population.get_generation()) + '\n')
             output_file.write(str(population.get_average_score()) + '\n')
