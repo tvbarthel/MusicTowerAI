@@ -1,6 +1,6 @@
 class Player:
-    def __init__(self):
-        self.dna = []
+    def __init__(self, dna):
+        self.dna = dna
         self.score = 0
 
     def get_score(self):
