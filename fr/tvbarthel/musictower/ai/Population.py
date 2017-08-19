@@ -1,3 +1,4 @@
+import math
 from random import choice
 
 
@@ -31,9 +32,15 @@ class Population:
     def next_generation(self):
         # create pool
         pool = []
+
+        minScore = len(self.players[0].get_dna())
         for player in self.players:
-            score = player.get_score()
-            for i in range(score * score):
+            if player.get_score() < minScore:
+                minScore = player.get_score()
+
+        for player in self.players:
+            score = player.get_score() - minScore + 1
+            for i in range(int(math.pow(score, 4))):
                 pool.append(player)
 
         # grow the population if the generation is stable enough
