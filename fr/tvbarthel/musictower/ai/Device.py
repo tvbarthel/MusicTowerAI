@@ -1,4 +1,4 @@
-from com.android.monkeyrunner import MonkeyRunner
+from com.android.monkeyrunner import MonkeyRunner, MonkeyDevice
 
 
 class Device:
@@ -40,3 +40,6 @@ class Device:
             return self.wrappedDevice.image.getRawPixel(x, y)
         else:
             return ()
+
+    def touch(self, x, y):
+        self.wrappedDevice.touch(x, y, MonkeyDevice.DOWN_AND_UP)
