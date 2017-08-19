@@ -81,7 +81,10 @@ class Player:
         child_dna = []
         for index in range(dna_length):
             if choice([True, False]):
-                child_dna.append(first_parent_dna[index])
+                parent_dna = first_parent_dna
             else:
-                child_dna.append(second_parent_dna[index])
+                parent_dna = second_parent_dna
+            child_reference = child_dna[-1] if child_dna else 0
+            parent_delta = parent_dna[index] - parent_dna[index - 1] if index > 0 else parent_dna[index]
+            child_dna.append(child_reference + parent_delta)
         return child_dna
