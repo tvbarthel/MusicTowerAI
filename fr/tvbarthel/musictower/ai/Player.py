@@ -2,17 +2,17 @@ from random import choice, random, randint
 
 
 class Player:
-    MUTATION_FACTORS = [-100, -75, -50, 50, 75, 100]
+    MUTATION_FACTORS = [-30, -20, -10, 10, 20, 30]
     NEW_GENE_DEFAULT_OFFSET = 1000
-    NEW_GENE_MIN_VARIATION = -200
-    NEW_GENE_MAX_VARIATION = 200
+    NEW_GENE_MIN_VARIATION = -100
+    NEW_GENE_MAX_VARIATION = 100
 
     def __init__(self, dna):
         self.dna = dna
         self.score = 0
 
     def __str__(self):
-        return "Score : " + str(self.score) + " " + str(self.dna)
+        return "Score : " + str(self.score) + " " + str(self.get_deltas())
 
     def get_score(self):
         return self.score
