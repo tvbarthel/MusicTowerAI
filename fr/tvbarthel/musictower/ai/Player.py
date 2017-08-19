@@ -2,10 +2,10 @@ from random import choice, random, randint
 
 
 class Player:
-    MUTATION_FACTORS = [-150, -100, -50, 50, 100, 150]
+    MUTATION_FACTORS = [-100, -75, -50, 50, 75, 100]
     NEW_GENE_DEFAULT_OFFSET = 1000
-    NEW_GENE_MIN_VARIATION = -500
-    NEW_GENE_MAX_VARIATION = 500
+    NEW_GENE_MIN_VARIATION = -200
+    NEW_GENE_MAX_VARIATION = 200
 
     def __init__(self, dna):
         self.dna = dna
