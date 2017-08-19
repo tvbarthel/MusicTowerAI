@@ -31,8 +31,31 @@ class Player:
         :return: a newly created player.
         """
         first_parent_dna = self.get_dna()
+        first_parent_score = self.score
         second_parent_dna = player.get_dna()
-        child_dna = Player.__reproduce_dna(first_parent_dna, second_parent_dna)
+        second_parent_score = player.score
+
+        if len(first_parent_dna) is not len(second_parent_dna):
+            raise ValueError("Player should have the same dna length")
+
+        dna_length = len(first_parent_dna)
+        child_dna = []
+        parent_pool_dna = [first_parent_dna, second_parent_dna]
+
+        for index in range(dna_length):
+            if (index <= first_parent_score) and (index <= second_parent_score):
+                parent_dna = choice(parent_pool_dna)
+            elif index <= first_parent_score:
+                parent_dna = first_parent_dna
+            elif index <= second_parent_score:
+                parent_dna = second_parent_dna
+            else:
+                parent_dna = choice(parent_pool_dna)
+
+            child_reference = child_dna[-1] if child_dna else 0
+            parent_delta = parent_dna[index] - parent_dna[index - 1] if index > 0 else parent_dna[index]
+            child_dna.append(child_reference + parent_delta)
+
         return Player(child_dna)
 
     def mutate(self, percentage):
@@ -71,20 +94,3 @@ class Player:
             variation = randint(Player.NEW_GENE_MIN_VARIATION, Player.NEW_GENE_MAX_VARIATION)
             new_value = max(0, reference + offset + variation)
             self.dna.append(new_value)
-
-    @staticmethod
-    def __reproduce_dna(first_parent_dna, second_parent_dna):
-        if len(first_parent_dna) is not len(second_parent_dna):
-            raise ValueError("Player should have the same dna length")
-
-        dna_length = len(first_parent_dna)
-        child_dna = []
-        for index in range(dna_length):
-            if choice([True, False]):
-                parent_dna = first_parent_dna
-            else:
-                parent_dna = second_parent_dna
-            child_reference = child_dna[-1] if child_dna else 0
-            parent_delta = parent_dna[index] - parent_dna[index - 1] if index > 0 else parent_dna[index]
-            child_dna.append(child_reference + parent_delta)
-        return child_dna
