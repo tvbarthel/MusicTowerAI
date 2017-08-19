@@ -33,7 +33,7 @@ class Population:
         pool = []
         for player in self.players:
             score = player.get_score()
-            for i in range(score):
+            for i in range(score * score):
                 pool.append(player)
 
         # grow the population if the generation is stable enough
