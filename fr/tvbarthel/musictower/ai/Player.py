@@ -20,6 +20,13 @@ class Player:
     def get_dna(self):
         return self.dna
 
+    def get_deltas(self):
+        deltas = []
+        for index in range(len(self.dna)):
+            new_delta = self.dna[index] - self.dna[index - 1] if index > 0 else self.dna[index]
+            deltas.append(new_delta)
+        return deltas
+
     def reproduce(self, player):
         """
         Reproduce this player with another player.
