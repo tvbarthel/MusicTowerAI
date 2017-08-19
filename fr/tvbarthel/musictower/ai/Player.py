@@ -11,6 +11,9 @@ class Player:
         self.dna = dna
         self.score = 0
 
+    def __str__(self):
+        return "Score : " + str(self.score) + " " + str(self.dna)
+
     def get_score(self):
         return self.score
 
