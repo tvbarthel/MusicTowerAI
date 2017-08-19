@@ -1,8 +1,8 @@
 import time
 
+from Bot import Bot
 from Device import Device
 from OCRManager import OCRManager
-from Bot import Bot
 
 
 class DeviceBot(Bot):
@@ -29,6 +29,9 @@ class DeviceBot(Bot):
         self.OCRManager = OCRManager()
 
     def play(self, timestamps):
+        # delay to ensure phone command idling state
+        time.sleep(1.5)
+
         # start playing
         start = self.get_current_time()
         self.device.touch(self.RESTART_COORDINATE_X, self.RESTART_COORDINATE_Y)
