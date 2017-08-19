@@ -1,5 +1,5 @@
-from fr.tvbarthel.musictower.ai.Player import Player
-from fr.tvbarthel.musictower.ai.Population import Population
+from Player import Player
+from Population import Population
 
 
 class PopulationPersistor:

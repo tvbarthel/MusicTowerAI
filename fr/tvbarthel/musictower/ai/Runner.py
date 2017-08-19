@@ -1,7 +1,17 @@
-from Bot import Bot
+from PopulationPersistor import PopulationPersistor
 
 print "MusicTower AI"
 
-bot = Bot()
-score = bot.play([1000, 1900, 2700, 3600, 4400, 5300, 6200, 7100, 8000, 8900])
-print "Game result: " + str(score)
+# load population
+persistor = PopulationPersistor()
+popupation = persistor.load_population("static/fake_population.txt")
+
+# fake result
+for player in popupation.players:
+    player.score = 5
+
+# next gen
+nextPopulation = popupation.next_generation()
+
+print str(popupation)
+print str(nextPopulation)

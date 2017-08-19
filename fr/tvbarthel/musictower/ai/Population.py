@@ -1,7 +1,19 @@
+from random import choice
+
+
 class Population:
+    # chance of mutation for each gene of a player.
+    MUTATION_PERCENTAGE = 0.05
+
+    # number of gene added once the generation is stable
+    GROW_RATE = 5
+
     def __init__(self, players, generation):
         self.players = players
         self.generation = generation
+
+    def __str__(self):
+        return "Generation : " + str(self.generation) + " ".join('\n' + (str(player)) for player in self.players)
 
     def get_players(self):
         return self.players
@@ -15,3 +27,44 @@ class Population:
             score_sum += player.get_score()
 
         return score_sum / len(self.players)
+
+    def next_generation(self):
+        # create pool
+        pool = []
+        for player in self.players:
+            score = player.get_score()
+            for i in range(score):
+                pool.append(player)
+
+        # grow the population if the generation is stable enough
+        if self.mustGrow():
+            for player in self.players:
+                player.add_genes(self.GROW_RATE)
+
+        # reproduce players based on their fitness
+        newPlayers = []
+        size = len(self.players)
+        for i in range(size):
+            parent1 = choice(pool)
+            parent2 = choice(pool)
+            newPlayers.append(parent1.reproduce(parent2))
+
+        # mutate new generation players
+        for player in newPlayers:
+            player.mutate(self.MUTATION_PERCENTAGE)
+
+        return Population(newPlayers, self.generation + 1)
+
+    def mustGrow(self):
+        """
+        Used to determine if the population is enough stable to grow.
+        Current implementation is based on players' score.
+        If every score is close enough to the maximum one allowed with the current genes number, grow.
+        :return: true if the population must grow
+        """
+        maxScore = len(self.players[0].get_dna())
+        mustGrow = True
+        for player in self.players:
+            if player.get_score() < maxScore - 2:
+                mustGrow = False
+        return mustGrow
