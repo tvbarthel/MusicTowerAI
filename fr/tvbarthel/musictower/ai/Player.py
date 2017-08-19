@@ -44,7 +44,7 @@ class Player:
         for index in range(dna_length):
             if random() < percentage:
                 mutation_factor = choice(Player.MUTATION_FACTORS)
-                self.dna[index] += mutation_factor
+                self.dna[index] = max(0, self.dna[index] + mutation_factor)
 
     def add_genes(self, number_of_genes_to_add):
         """
@@ -66,7 +66,7 @@ class Player:
         for index in range(number_of_genes_to_add):
             reference = self.dna[-1] if self.dna else 0
             variation = randint(Player.NEW_GENE_MIN_VARIATION, Player.NEW_GENE_MAX_VARIATION)
-            new_value = reference + offset + variation
+            new_value = max(0, reference + offset + variation)
             self.dna.append(new_value)
 
     @staticmethod
