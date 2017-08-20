@@ -4,7 +4,7 @@ from random import choice
 
 class Population:
     # chance of mutation for each gene of a player.
-    MUTATION_PERCENTAGE = 0.05
+    MUTATION_PERCENTAGE = 0.07
 
     # number of gene added once the generation is stable
     GROW_RATE = 5
