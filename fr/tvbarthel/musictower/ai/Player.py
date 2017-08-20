@@ -2,7 +2,7 @@ from random import choice, random, gauss
 
 
 class Player:
-    MUTATION_FACTORS = [-30, -20, -10, 10, 20, 30]
+    MUTATION_FACTORS = [30, 40, 50]
     NEW_GENE_DEFAULT_DELTA = 800
     NEW_GENE_MAX_VARIATION_NARROW = 50
     NEW_GENE_MAX_VARIATION_BROAD = 500
@@ -83,10 +83,20 @@ class Player:
         if percentage < 0 or percentage > 1:
             raise ValueError("Percentage must be in range [0, 1]")
         dna_length = len(self.dna)
+        deltas = self.get_deltas()
         for index in range(dna_length):
-            if random() < percentage:
+            if 2 < index < dna_length - 1 and random() < percentage:
+                # choose a mutation value
                 mutation_factor = choice(Player.MUTATION_FACTORS)
-                self.dna[index] = max(0, self.dna[index] + mutation_factor)
+
+                # use this mutation to go closer to the MM delta in order to stay in rhythm
+                movingMean = (deltas[index - 1] + deltas[index + 1]) / 2
+                if deltas[index] > movingMean:
+                    mutation_factor *= -1
+
+                # apply mutation shift to the current gene and every subsequent ones
+                for j in range(index, dna_length):
+                    self.dna[j] = max(0, self.dna[j] + mutation_factor)
 
     def add_genes(self, number_of_genes_to_add):
         """
