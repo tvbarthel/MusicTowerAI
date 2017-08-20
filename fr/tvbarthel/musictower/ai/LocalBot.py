@@ -3,9 +3,10 @@ from Bot import Bot
 
 class LocalBot(Bot):
     DEFAULT_TARGET_DELTAS = [1100, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800,
-                             700, 700, 700, 700, 700, 600, 600, 600, 700, 700, 800, 800, 900]
+                             700, 700, 700, 700, 700, 600, 600, 600, 700, 700, 800, 800, 900,
+                             900, 900, 900, 800, 800, 800, 800, 800, 800, 800, 800, 800, 800]
 
-    DEFAULT_TOTAL_ERROR = 400
+    DEFAULT_TOTAL_ERROR = 800
 
     def __init__(self, target_deltas=DEFAULT_TARGET_DELTAS, total_error=DEFAULT_TOTAL_ERROR):
         Bot.__init__(self)
