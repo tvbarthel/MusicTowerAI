@@ -66,12 +66,12 @@ class Population:
         """
         Used to determine if the population is enough stable to grow.
         Current implementation is based on players' score.
-        If every score is close enough to the maximum one allowed with the current genes number, grow.
+        If at least on player reach the max score, we must give him some space for improvement, grow!
         :return: true if the population must grow
         """
         maxScore = len(self.players[0].get_dna())
-        mustGrow = True
+        mustGrow = False
         for player in self.players:
-            if player.get_score() < maxScore - 2:
-                mustGrow = False
+            if player.get_score() == maxScore:
+                mustGrow = True
         return mustGrow
