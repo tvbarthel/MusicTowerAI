@@ -43,24 +43,24 @@ class Population:
             for i in range(int(math.pow(score, 4))):
                 pool.append(player)
 
-        # grow the population if the generation is stable enough
-        if self.mustGrow():
-            for player in self.players:
-                player.add_genes(self.GROW_RATE)
-
         # reproduce players based on their fitness
-        newPlayers = []
+        new_players = []
         size = len(self.players)
         for i in range(size):
             parent1 = choice(pool)
             parent2 = choice(pool)
-            newPlayers.append(parent1.reproduce(parent2))
+            new_players.append(parent1.reproduce(parent2))
 
         # mutate new generation players
-        for player in newPlayers:
+        for player in new_players:
             player.mutate(self.MUTATION_PERCENTAGE)
 
-        return Population(newPlayers, self.generation + 1)
+        # grow the next population if the current generation is stable enough
+        if self.mustGrow():
+            for player in new_players:
+                player.add_genes(self.GROW_RATE)
+
+        return Population(new_players, self.generation + 1)
 
     def mustGrow(self):
         """
