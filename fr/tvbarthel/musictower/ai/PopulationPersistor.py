@@ -22,9 +22,12 @@ class PopulationPersistor:
         average_score = input_file.readline()
         players = []
         for player_line in input_file:
-            str_dna = player_line.split(' ')
-            dna = [int(a) for a in str_dna]
-            players.append(Player(dna))
+            raw_data = player_line.split(' ')
+            score = raw_data.pop(0)
+            dna = [int(a) for a in raw_data]
+            player = Player(dna)
+            player.score = score
+            players.append(player)
         input_file.close()
 
         return Population(players, generation)
@@ -43,5 +46,5 @@ class PopulationPersistor:
         players = population.get_players()
         for player in players:
             str_dna = [str(a) for a in player.get_dna()]
-            output_file.write(' '.join(str_dna) + '\n')
+            output_file.write(str(player.score) + ' ' + ' '.join(str_dna) + '\n')
         output_file.close()
