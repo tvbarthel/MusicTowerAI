@@ -29,6 +29,14 @@ class Population:
 
         return score_sum / len(self.players)
 
+    def get_max_score(self):
+        score_max = 0
+        for player in self.players:
+            if score_max < player.get_score():
+                score_max = player.get_score()
+
+        return score_max
+
     def next_generation(self):
         # create pool
         pool = []
