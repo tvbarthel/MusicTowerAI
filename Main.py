@@ -1,7 +1,7 @@
 from fr.tvbarthel.musictower.ai.Runner import Runner
 
 FIRST_GENERATION_PATH = "static/population.txt"
-OUTPUT = "static/attemp1/"
+OUTPUT = "static/attempt2/"
 
 print "========= MusicTower AI ========="
 runner = Runner()
