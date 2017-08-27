@@ -68,7 +68,7 @@ class Runner:
                     break
             average_generation += successful_generation
             simulation_stats.append(
-                SimulationStats(successful_generation, self.last_average_score, self.last_average_score))
+                SimulationStats(successful_generation, self.last_average_score, self.last_max_score))
             average_score += self.last_average_score
 
         # log some stats on the simulations performed
