@@ -9,6 +9,9 @@ class Population:
     # number of gene added once the generation is stable
     GROW_RATE = 5
 
+    # score different allowed from the best player to be considered as a potential reproducer.
+    REPRODUCER_SCORE_LOWER_RANGE_DELTA = 10
+
     def __init__(self, players, generation):
         self.players = players
         self.generation = generation
@@ -41,13 +44,20 @@ class Population:
         # create pool
         pool = []
 
-        minScore = len(self.players[0].get_dna())
+        # filter players to choose reproducers in the range of max_score
+        # and max_score - REPRODUCER_SCORE_LOWER_RANGER_DELTA
+        reproducers = []
+        max_score = self.get_max_score()
+        min_score = max_score
         for player in self.players:
-            if player.get_score() < minScore:
-                minScore = player.get_score()
+            player_score = player.get_score()
+            if max_score - player_score < self.REPRODUCER_SCORE_LOWER_RANGE_DELTA:
+                reproducers.append(player)
+                if player_score < min_score:
+                    min_score = player_score
 
-        for player in self.players:
-            score = player.get_score() - minScore + 1
+        for player in reproducers:
+            score = player.get_score() - min_score + 1
             for i in range(int(math.pow(score, 4))):
                 pool.append(player)
 
