@@ -1,3 +1,4 @@
+import os
 import subprocess
 
 
@@ -20,8 +21,18 @@ class OCRManager:
         :return: current score displayed on the device as an int.
         """
         file = device.take_screenshot(self.SCORE_RECT)
+
         input_file = open(file)
+
+        # convert the screenshot into black and white for better OCR
+        current_dir = os.path.dirname(os.path.realpath(__file__))
+        script_path = os.path.join(current_dir, "image_convertor.py")
+        command = ['python', script_path, file, file]
+        subprocess.Popen(command)
+
+        # run tesseract on the black and white image
         command = ['tesseract', 'stdin', 'stdout', '--psm', '7', '--oem', '0', 'tesseract/digits']
         proc = subprocess.Popen(command, stdin=input_file, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         output, error = proc.communicate()
-        return int(output.splitlines()[0])
+
+        return int(output.splitlines()[0].replace(' ', ''))

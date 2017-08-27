@@ -1,6 +1,13 @@
 # MusicTowerAI
 AI for MusicTower game.
 
+# Dependencies
+
+install dependencies:
+```
+    pip install -r requirements.txt -t lib
+```
+
 # How to
 
 ```
