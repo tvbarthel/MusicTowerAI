@@ -58,8 +58,7 @@ class Population:
 
         for player in reproducers:
             score = player.get_score() - min_score + 1
-            for i in range(int(math.pow(score, 4))):
-                pool.append(player)
+            pool += int(math.pow(score, 4)) * [player]
 
         # reproduce players based on their fitness
         new_players = []

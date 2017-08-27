@@ -2,6 +2,10 @@ from random import choice, random, gauss
 
 
 class Player:
+    # used to split the DNA into decile. Each decile has its own weight for the mutation factor.
+    # same mutation chance for every genes would be an array of 1
+    MUTATION_DISTRIBUTION = [0, 0.2, 0.4, 0.6, 0.8, 0.9, 1.1, 0.7, 0.6, 0.5]
+
     MUTATION_FACTORS = [30, 40, 50]
     NEW_GENE_DEFAULT_DELTA = 800
     NEW_GENE_MAX_VARIATION_NARROW = 50
@@ -84,10 +88,15 @@ class Player:
             raise ValueError("Percentage must be in range [0, 1]")
         dna_length = len(self.dna)
         deltas = self.get_deltas()
+
         for index in range(dna_length):
+
             if 2 < index < dna_length - 1 and random() < percentage:
                 # choose a mutation value
                 mutation_factor = choice(Player.MUTATION_FACTORS)
+                mutation_factor = Player.MUTATION_DISTRIBUTION[
+                                      int(float(index) / float(dna_length) * len(
+                                          Player.MUTATION_DISTRIBUTION))] * mutation_factor
 
                 # use this mutation to go closer to the MM delta in order to stay in rhythm
                 movingMean = (deltas[index - 1] + deltas[index + 1]) / 2
